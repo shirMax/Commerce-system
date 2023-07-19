@@ -57,3 +57,32 @@ The scenario number determines the sequence of actions, data transformations, or
 
 ServiceURL: The serviceURL property specifies the URL of the external service that the system will interact with. In this case, the value is set to https://php-server-try.000webhostapp.com/.
 # Commerce-system
+
+##homepage-
+![image](https://github.com/shirMax/Commerce-system/assets/110455848/36c122b4-98e6-40e1-844b-bed74d468d8a)
+
+##signup-
+![image](https://github.com/shirMax/Commerce-system/assets/110455848/760c0d15-f464-4009-83e7-155ec355e01c)
+
+##my stores-
+![image](https://github.com/shirMax/Commerce-system/assets/110455848/aec924c7-4e0e-4174-a8db-b986fe63a154)
+
+![image](https://github.com/shirMax/Commerce-system/assets/110455848/5e87478b-a9ad-483d-a8c9-ca4ae17aa16c)
+
+##about-
+![image](https://github.com/shirMax/Commerce-system/assets/110455848/ba3870b4-789b-4fd7-8f7d-bbb5cc7e6886)
+
+![image](https://github.com/shirMax/Commerce-system/assets/110455848/7e1104c0-ba63-4356-b457-38f2888b4505)
+
+#search-
+![image](https://github.com/shirMax/Commerce-system/assets/110455848/77014a5c-48d7-429e-8942-20a61a7c1f94)
+
+
+
+
+
+
+
+
+
+
