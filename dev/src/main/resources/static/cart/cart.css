@@ -1,0 +1,81 @@
+.address-btn.selected,
+.address-btn.selected:hover {
+    background-color: #007bff;
+    color: #fff;
+    /* Add any other hover styles you want */
+}
+
+.circle{
+
+    background-color:#ebdffb;
+    height:70px;
+    width:70px;
+    border-radius:50%;
+    display:flex;
+    color:#9553ea;
+    justify-content:center;
+    align-items:center;
+    font-size:20px;
+
+}
+
+
+.circle-2{
+
+    background-color:#fbebdf;
+    height:70px;
+    width:70px;
+    border-radius:50%;
+    display:flex;
+    color:#ea9253;
+    justify-content:center;
+    align-items:center;
+    font-size:20px;
+
+}
+
+
+.circle-3{
+
+    background-color:blue;
+    height:50px;
+    width:50px;
+    border-radius:50%;
+    display:flex;
+    color:#fff;
+    justify-content:center;
+    align-items:center;
+    font-size:20px;
+
+}
+
+
+
+.custom-scrollbar-js,
+.custom-scrollbar-css {
+  height: 200px;
+}
+
+
+/* Custom Scrollbar using CSS */
+.custom-scrollbar-css {
+  overflow-y: scroll;
+  padding: 10px;
+}
+
+/* scrollbar width */
+.custom-scrollbar-css::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* scrollbar track */
+.custom-scrollbar-css::-webkit-scrollbar-track {
+  background: #eee;
+}
+
+/* scrollbar handle */
+.custom-scrollbar-css::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  background-color: #00d2ff;
+  background-image: linear-gradient(to top, #00d2ff 0%, #3a7bd5 100%);
+}

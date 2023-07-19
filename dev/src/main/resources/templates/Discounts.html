@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/autosize.js/4.0.2/autosize.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css"/>
+  <link rel="stylesheet" href="storageManagement/storageManagement.css">
+  <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-T7VgGb+6UJw1W8W6ENeQ/CVi+I6AwxQzRlaVyLPfwr7VrCcz+iq3wZrCp1I19niV" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+
+  <script src="/discounts/discounts.js"></script>
+  <script src="notification.js"></script>
+  <!--jQuery-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <!--Plugin JavaScript file-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+
+  <script>
+    $( function() {
+      $(".js-range-slider").ionRangeSlider();
+    } );
+  </script>
+</head>
+<body>
+<div th:replace="~{NavigationBar :: navigationBar}"></div>
+<div th:replace="~{NavigationBar :: navigationBarModal}"></div>
+<div class="container">
+  <div class="mt-4">
+    <h1 class="text-center mb-3" th:text="${storeName + ' discount'}">Store name</h1>
+
+    <div class="bg-image h-100">
+      <div class="mask d-flex align-items-center h-100">
+
+        <div class="row justify-content-center double-width-table">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body p-0">
+                <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 500px">
+                  <table class="table table-striped mb-0">
+                    <thead style="background-color: #002d72;">
+                    <tr>
+                      <th></th>
+                      <th>Discount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="discount : ${discounts}">
+                      <td><input type="checkbox" th:name="'selectedDiscounts'" th:value="${discount.getDiscountId()}" /></td>
+                      <td class="text-wrap" th:text="${discount.toString()}"></td>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--buttons-->
+    <div class="text-center mt-5">
+      <div class="row justify-content-center row-cols-1 row-cols-md-3 row-cols-lg-4 ">
+
+        <!-- add product discount -->
+        <div class="col mb-4">
+          <button type="button" class="btn btn-outline-primary rounded-pill btn-lg btn-block text-truncate text-wrap" data-bs-toggle="modal" data-bs-target="#addProductDiscountModal">Add product discount</button>
+        </div>
+
+        <!-- add category discount -->
+        <div class="col mb-4">
+          <button type="button" class="btn btn-outline-primary rounded-pill btn-lg btn-block text-truncate text-wrap" data-bs-toggle="modal" data-bs-target="#addCategoryDiscountModal">Add category discount</button>
+        </div>
+
+        <!-- add store discount -->
+        <div class="col mb-4">
+          <button type="button" class="btn btn-outline-primary rounded-pill btn-lg btn-block text-truncate text-wrap" data-bs-toggle="modal" data-bs-target="#addStoreDiscountModal">Add store discount</button>
+        </div>
+
+        <!-- remove discount -->
+        <div class="col mb-4">
+          <button type="button" class="btn btn-outline-primary rounded-pill btn-lg btn-block text-truncate text-wrap" data-bs-toggle="modal" data-bs-target="#removeDiscountModal">Remove discount</button>
+        </div>
+
+        <!-- add discount rule -->
+        <div class="col mb-4">
+          <button type="button" class="btn btn-outline-primary rounded-pill btn-lg btn-block text-truncate text-wrap" data-bs-toggle="modal" data-bs-target="#addAddDiscountRuleModal">Add add discount rule</button>
+        </div>
+
+        <!-- add and discount rule -->
+        <div class="col mb-4">
+          <button type="button" class="btn btn-outline-primary rounded-pill btn-lg btn-block text-truncate text-wrap" data-bs-toggle="modal" data-bs-target="#addAndDiscountRuleModal">Add and discount rule</button>
+        </div>
+
+        <!-- add if then discount rule -->
+        <div class="col mb-4">
+          <button type="button" class="btn btn-outline-primary rounded-pill btn-lg btn-block text-truncate text-wrap" data-bs-toggle="modal" data-bs-target="#addIfThenDiscountRuleModal">Add if then discount rule</button>
+        </div>
+
+        <!-- add max discount rule -->
+        <div class="col mb-4">
+          <button type="button" class="btn btn-outline-primary rounded-pill btn-lg btn-block text-truncate text-wrap" data-bs-toggle="modal" data-bs-target="#addMaxDiscountRuleModal">Add max discount rule</button>
+        </div>
+
+        <!-- add or discount rule -->
+        <div class="col mb-4">
+          <button type="button" class="btn btn-outline-primary rounded-pill btn-lg btn-block text-truncate text-wrap" data-bs-toggle="modal" data-bs-target="#addOrDiscountRuleModal">Add or discount rule</button>
+        </div>
+
+        <!-- add xor discount rule -->
+        <div class="col mb-4">
+          <button type="button" class="btn btn-outline-primary rounded-pill btn-lg btn-block text-truncate text-wrap" data-bs-toggle="modal" data-bs-target="#addXorDiscountRuleModal">Add xor discount rule</button>
+        </div>
+
+      </div>
+    </div>
+    <!--buttons-->
+  </div>
+</div>
+
+<!--add new product discount Modal -->
+<div class="modal fade" id="addProductDiscountModal" tabindex="-1" aria-labelledby="addProductDiscountModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Add product discount</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id = "addProductDiscountForm" action = "/addProductDiscount" method = "post">
+          <div class="form-outline mb-2">
+            <input type="hidden" name="storeId" th:value="${storeId}" />
+            <input type="text" class="form-control form-control-lg mt-3" name = "productId" placeholder="Product id" />
+            <input type="text" class="form-control form-control-lg mt-3" name = "discountPercentage" placeholder="Discount percentage" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" id="addProductDiscountBtn" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--add new category discount Modal -->
+<div class="modal fade" id="addCategoryDiscountModal" tabindex="-1" aria-labelledby="addCategoryDiscountModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Add category discount</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id = "addCategoryDiscountForm" action = "/addCategoryDiscount" method = "post">
+          <div class="form-outline mb-2">
+            <input type="hidden" name="storeId" th:value="${storeId}" />
+            <input type="text" class="form-control form-control-lg mt-3" name = "discountPercentage" placeholder="Discount percentage" />
+            <select class="form-select form-select-sm form-select-lg mt-3" aria-label=".form-select-sm example" name="category" th:name="productCategory">
+              <option value="" disabled selected>Category</option>
+              <option th:each="category : ${T(Domain.Store.Category).values()}"
+                      th:value="${category}"
+                      th:text="${category}"></option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" id="addCategoryDiscountBtn" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--add new product discount Modal -->
+<div class="modal fade" id="addStoreDiscountModal" tabindex="-1" aria-labelledby="addStoreDiscountModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Add store discount</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id = "addStoreDiscountForm" action = "/addStoreDiscount" method = "post">
+          <div class="form-outline mb-2">
+            <input type="hidden" name="storeId" th:value="${storeId}" />
+            <input type="text" class="form-control form-control-lg mt-3" name = "discountPercentage" placeholder="Discount percentage" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" id="addStoreDiscountBtn" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--remove discount Modal -->
+<div class="modal fade" id="removeDiscountModal" tabindex="-1" aria-labelledby="removeDiscountModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Remove discount</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id = "removeDiscountForm" action = "/removeDiscount" method = "post">
+          <div class="form-outline mb-2">
+            <input type="hidden" name="storeId" th:value="${storeId}" />
+            <input type="text" class="form-control form-control-lg mt-3" name = "discountId" placeholder="Discount id" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" id="removeDiscountBtn" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--xor discount rule Modal -->
+<div class="modal fade" id="addXorDiscountRuleModal" tabindex="-1" aria-labelledby="addXorDiscountRuleModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Xor discount rule</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id = "addXorDiscountRuleForm" action = "/addXorDiscountRule" method = "post">
+          <div class="form-outline mb-2">
+            <input type="hidden" name="storeId" th:value="${storeId}" />
+            <h4>Click save to create the xor discount!</h4>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" id="addXorDiscountRuleFormBtn" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--add max discount rule Modal -->
+<div class="modal fade" id="addMaxDiscountRuleModal" tabindex="-1" aria-labelledby="addMaxDiscountRuleModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Max discount rule</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id = "addMaxDiscountRuleForm" action = "/addMaxDiscountRule" method = "post">
+          <div class="form-outline mb-2">
+            <input type="hidden" name="storeId" th:value="${storeId}" />
+            <h4>Click save to create the max discount!</h4>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" id="addMaxDiscountRuleFormBtn" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--add Add discount rule Modal -->
+<div class="modal fade" id="addAddDiscountRuleModal" tabindex="-1" aria-labelledby="addAddDiscountRuleModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Add discount rule</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id = "addAddDiscountRuleForm" action = "/addAddDiscountRule" method = "post">
+          <div class="form-outline mb-2">
+            <input type="hidden" name="storeId" th:value="${storeId}" />
+            <h4>Click save to create the add discount!</h4>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" id="addAddDiscountRuleFormBtn" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--or discount rule Modal -->
+<div class="modal fade" id="addOrDiscountRuleModal" tabindex="-1" aria-labelledby="addOrDiscountRuleModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Or discount rule</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id = "addOrDiscountRuleForm" action = "/addOrDiscountRule" method = "post">
+          <div class="form-outline mb-2">
+            <input type="hidden" name="storeId" th:value="${storeId}" />
+            <input type="text" class="form-control form-control-lg mt-3" name = "MinimumBasketPrice" placeholder="Condition: Minimum Basket Price" />
+            <input type="text" class="form-control form-control-lg mt-3" name = "MinimumProductQuantity" placeholder="Product Condition: Minimum Product Quantity" />
+            <input type="text" class="form-control form-control-lg mt-3" name = "MinimumProductId" placeholder="Product Condition: Minimum Product Id" />
+            <input type="text" class="form-control form-control-lg mt-3" name = "MinimumCategoryQuantity" placeholder="Category Condition: Minimum Category Quantity" />
+            <select class="form-select form-select-sm form-select-lg mt-3" aria-label=".form-select-sm example" name="category">
+              <option value="" disabled selected>Category</option>
+              <option th:each="category : ${T(Domain.Store.Category).values()}"
+                      th:value="${category}"
+                      th:text="${category}"></option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" id="addOrDiscountRuleFormBtn" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--and discount rule Modal -->
+<div class="modal fade" id="addAndDiscountRuleModal" tabindex="-1" aria-labelledby="addAndDiscountRuleModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">And discount rule</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id = "addAndDiscountRuleForm" action = "/addAndDiscountRule" method = "post">
+          <div class="form-outline mb-2">
+            <input type="hidden" name="storeId" th:value="${storeId}" />
+            <input type="text" class="form-control form-control-lg mt-3" name = "MinimumBasketPrice" placeholder="Condition: Minimum Basket Price" />
+            <input type="text" class="form-control form-control-lg mt-3" name = "MinimumProductQuantity" placeholder="Product Condition: Minimum Product Quantity" />
+            <input type="text" class="form-control form-control-lg mt-3" name = "MinimumProductId" placeholder="Product Condition: Minimum Product Id" />
+            <input type="text" class="form-control form-control-lg mt-3" name = "MinimumCategoryQuantity" placeholder="Category Condition: Minimum Category Quantity" />
+            <select class="form-select form-select-sm form-select-lg mt-3" aria-label=".form-select-sm example" name="category">
+              <option value="" disabled selected>Category</option>
+              <option th:each="category : ${T(Domain.Store.Category).values()}"
+                      th:value="${category}"
+                      th:text="${category}"></option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" id="addAndDiscountRuleFormBtn" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--if then discount rule Modal -->
+<div class="modal fade" id="addIfThenDiscountRuleModal" tabindex="-1" aria-labelledby="addIfThenDiscountRuleModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">if then discount rule</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id = "addIfThenDiscountRuleForm" action = "/addIfThenDiscountRule" method = "post">
+          <div class="form-outline mb-2">
+            <input type="hidden" name="storeId" th:value="${storeId}" />
+            <input type="text" class="form-control form-control-lg mt-3" name = "MinimumBasketPrice" placeholder="Condition: Minimum Basket Price" />
+            <input type="text" class="form-control form-control-lg mt-3" name = "MinimumProductQuantity" placeholder="Product Condition: Minimum Product Quantity" />
+            <input type="text" class="form-control form-control-lg mt-3" name = "MinimumProductId" placeholder="Product Condition: Minimum Product Id" />
+            <input type="text" class="form-control form-control-lg mt-3" name = "MinimumCategoryQuantity" placeholder="Category Condition: Minimum Category Quantity" />
+            <select class="form-select form-select-sm form-select-lg mt-3" aria-label=".form-select-sm example" name="category">
+              <option value="" disabled selected>Category</option>
+              <option th:each="category : ${T(Domain.Store.Category).values()}"
+                      th:value="${category}"
+                      th:text="${category}"></option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" id="addIfThenDiscountRuleFormBtn" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<p th:if = "${errorMessage}" class="text-center text-danger mt-5 mb-0" th:text="${errorMessage}"></p>
+<p th:if = "${successMessage}" class="text-center text-success mt-5 mb-0" th:text="${successMessage}"></p>
+
+</body>
+</html>

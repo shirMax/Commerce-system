@@ -1,0 +1,263 @@
+<!-- Fragment definition -->
+<nav th:fragment="navigationBar" class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand navbar-brand-bg" href="#">
+      <img src="https://img.freepik.com/premium-vector/letter-s-logo-vector_23987-138.jpg?w=2000" alt="Logo" width="40" height="30"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contactus">Contact</a>
+        </li>
+      </ul>
+      <form class="d-flex w-50 justify-content-center" role="search" id="searchForm">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search" name="search">
+          <button class="btn btn-secondary" type="submit">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+        <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-expanded="false">
+          <i class="bi bi-filter"></i>
+        </button>
+      </form>
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item" th:each="link : ${navigationLinks}">
+          <a class="nav-link" th:href="${link.url}" th:text="${link.name}"></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div
+        th:fragment="navigationBarModal"
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        style="display: none"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Advanced Search
+        </h1>
+        <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                id="closeBtn2"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <input id="storeNameId" type="text" class="form-control form-control-lg" name = "storeName" placeholder="Store Name"/>
+            <div class="dropdown">
+              <select class="form-select form-select-sm form-select-lg mt-3" aria-label=".form-select-sm example" name="productCategory" th:name="productCategory" multiple>
+                <option value="" disabled selected>Product category</option>
+                <option th:each="category : ${T(Domain.Store.Category).values()}"
+                        th:value="${category}"
+                        th:text="${category}"></option>
+              </select>
+            </div>
+          </div>
+          <label for="">price range:</label>
+          <input type="text" class="js-range-slider" name="price_range" value=""
+                 data-type="double"
+                 data-min="0"
+                 data-max="1000"
+                 data-from="0"
+                 data-to="1000"
+                 data-grid="true"/>
+          <label for="">store rate:</label>
+          <input type="text" class="js-range-slider" name="store_rate" value=""
+                 data-type="int"
+                 data-min="0"
+                 data-max="5"
+                 data-from="0"
+                 data-to="5"
+                 data-grid="false"/>
+          <label for="">product rate:</label>
+          <input type="text" class="js-range-slider" name="product_rate" value=""
+                 data-type="int"
+                 data-min="0"
+                 data-max="5"
+                 data-from="0"
+                 data-to="5"
+                 data-grid="false"/>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeBtn">Close</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="saveButton">Save</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).ready(function() {
+      var priceRange = $('.js-range-slider[name="price_range"]');
+      var storeRateRange = $('.js-range-slider[name="store_rate"]');
+      var productRateRange = $('.js-range-slider[name="product_rate"]');
+      var minPrice;
+      var maxPrice;
+      var minStoreRate;
+      var maxStoreRate;
+      var minProductRate;
+      var maxProductRate;
+      var selectedCategory;
+      var storeName;
+
+      // Handle search form submission
+      $('#searchForm').submit(function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Get the search query from the text input
+        const searchQuery = $(this).find('input[name="search"]').val();
+
+        // Create a URLSearchParams object to construct the search URL
+        const searchParams = new URLSearchParams();
+
+        // Add the search query to the URLSearchParams object
+        if(searchQuery !== "")
+          searchParams.append('searchKey', searchQuery);
+
+        // Get the selected category
+        selectedCategory = $('select[name="productCategory"]').val();
+
+        storeName = $('input[name="storeName"]').val();
+
+        if(storeName !== null && storeName !== "") {
+          searchParams.append('storeName', storeName);
+        }
+
+        if (selectedCategory !== "" && selectedCategory !== null && selectedCategory.length>0) {
+          searchParams.append('category', selectedCategory);
+        }
+        // Get the modal form data
+        minPrice = priceRange.data('from');
+        maxPrice = priceRange.data('to');
+
+        minStoreRate = storeRateRange.data('from');
+        maxStoreRate = storeRateRange.data('to');
+
+        minProductRate = productRateRange.data('from');
+        maxProductRate = productRateRange.data('to');
+
+        // Add the modal form data to the URLSearchParams object
+        if (minPrice !== 0)
+          searchParams.append('minPrice', minPrice);
+        if (maxPrice !== 1000)
+          searchParams.append('maxPrice', maxPrice);
+        if (minStoreRate !== 0)
+          searchParams.append('minStoreRate', minStoreRate);
+        if (maxStoreRate !== 5)
+          searchParams.append('maxStoreRate', maxStoreRate);
+        if (minProductRate !== 0)
+          searchParams.append('minProductRate', minProductRate);
+        if (maxProductRate !== 5)
+          searchParams.append('maxProductRate', maxProductRate);
+
+        // Create the search URL with the search parameters
+        var searchUrl = '/search?' + searchParams.toString();
+
+        // Redirect the user to the search URL
+        window.location.href = searchUrl;
+      });
+
+      // Handle modal show event
+      $('#exampleModal').on('show.bs.modal', function(event) {
+        selectedCategory = $('select[name="productCategory"]').val();
+        storeName = $('input[name="storeName"]').val();
+        minPrice = priceRange.data('from');
+        maxPrice = priceRange.data('to');
+
+        minStoreRate = storeRateRange.data('from');
+        maxStoreRate = storeRateRange.data('to');
+
+        minProductRate = productRateRange.data('from');
+        maxProductRate = productRateRange.data('to');
+        var form = $(this).find('form');
+
+        // Store the initial form values
+        form[0].initialValues = form.serialize();
+
+        // Reset the modified flag
+        form[0].modified = false;
+      });
+
+// Handle modal close button click
+      $('#closeBtn, #closeBtn2').on('click', function() {
+        var form = $(this).closest('.modal').find('form');
+        // Check if the form data has changed
+        if (form[0].modified) {
+          // Prompt the user for confirmation
+          var confirmClose = confirm('Do you want to discard the changes? Any unsaved changes will be lost.');
+
+          // If the user confirms, reset the form to the initial state
+          if (confirmClose) {
+            form[0].modified = false;
+            $('select[name="productCategory"]').val(selectedCategory);
+            $('input[name="storeName"]').val(storeName);
+            priceRange.data('ionRangeSlider').update({ from: minPrice });
+            priceRange.data('ionRangeSlider').update({ to: maxPrice });
+
+            storeRateRange.data('ionRangeSlider').update({ from: minStoreRate });
+            storeRateRange.data('ionRangeSlider').update({ to: maxStoreRate });
+
+            productRateRange.data('ionRangeSlider').update({ from: minProductRate });
+            productRateRange.data('ionRangeSlider').update({ to: maxProductRate });
+
+          } else {
+            // Prevent the modal from being closed
+            event.preventDefault();
+          }
+        }
+      });
+
+      $('#saveButton').on('click', function() {
+        var form = $('#exampleModal').find('form');
+
+        // Check if the form data has changed
+        if (form[0].checkValidity() && form.serialize() !== form[0].initialValues) {
+          // Save the form data
+
+          // Get the updated values from the form inputs
+          minPrice = priceRange.data('from');
+          maxPrice = priceRange.data('to');
+          minStoreRate = storeRateRange.data('from');
+          maxStoreRate = storeRateRange.data('to');
+          minProductRate = productRateRange.data('from');
+          maxProductRate = productRateRange.data('to');
+          storeName = $('input[name="storeName"]').val();
+          selectedCategory = $('select[name="productCategory"]').val();
+
+          // Update the initial form values
+          form[0].initialValues = form.serialize();
+
+          // Reset the modified flag
+          form[0].modified = false;
+        }
+
+        // Close the modal
+        $('#exampleModal').modal('hide');
+      });
+      // Handle form input change
+      $('#exampleModal').on('input', 'form', function() {
+        this.modified = true; // Set the modified flag when the form input changes
+      });
+    });
+  </script>
+</div>

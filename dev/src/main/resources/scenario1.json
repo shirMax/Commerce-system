@@ -1,0 +1,74 @@
+[
+  {
+    "command": "Register",
+    "params": {
+      "username": "u1",
+      "email": "u1@gmail.com",
+      "phone": "0543654558",
+      "password": "u1234567"
+    }
+  },
+  {
+    "command": "Register",
+    "params": {
+      "username": "u2",
+      "email": "u2@gmail.com",
+      "phone": "0543654558",
+      "password": "u1234567"
+    }
+  },
+  {
+    "command": "Register",
+    "params": {
+      "username": "u3",
+      "email": "u3@gmail.com",
+      "phone": "0543654558",
+      "password": "u1234567"
+    }
+  },
+  {
+    "command": "Login",
+    "params": {
+      "username": "u1",
+      "password": "u1234567"
+    }
+  },
+  {
+    "command": "OpenStore",
+    "params": {
+      "storeName": "s1",
+      "storeDescription": "s1 description"
+    }
+  },
+  {
+    "command": "AppointOwner",
+    "params": {
+      "username": "u2",
+      "storeId": 1
+    }
+  },
+  {
+    "command": "Logout",
+    "params": {
+    }
+  },
+  {
+    "command": "Login",
+    "params": {
+      "username": "u2",
+      "password": "u1234567"
+    }
+  },
+  {
+    "command": "AppointOwner",
+    "params": {
+      "username": "u3",
+      "storeId": 1
+    }
+  },
+  {
+    "command": "Logout",
+    "params": {
+    }
+  }
+]

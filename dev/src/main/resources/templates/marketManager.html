@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autosize.js/4.0.2/autosize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css"/>
+    <link rel="stylesheet" href="marketManager/marketManager.css">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-T7VgGb+6UJw1W8W6ENeQ/CVi+I6AwxQzRlaVyLPfwr7VrCcz+iq3wZrCp1I19niV" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+    <script src="notification.js"></script>
+    <script src="systemManagerNotification.js"></script>
+    <script src="/marketManager/marketManager.js"></script>
+
+    <!--jQuery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!--Plugin JavaScript file-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+
+    <script>
+        $( function() {
+            $(".js-range-slider").ionRangeSlider();
+        } );
+    </script>
+</head>
+<body>
+<div th:replace="~{NavigationBar :: navigationBar}"></div>
+<div th:replace="~{NavigationBar :: navigationBarModal}"></div>
+
+<div class="container">
+    <div class="mt-4">
+            <h1 class="text-center mb-3">Market manager actions</h1>
+
+            <h2 class="text-center mb-3">Stores</h2>
+
+            <!-- stores  -->
+            <div class="bg-image h-100">
+                <div class="mask h-100">
+
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body p-0">
+                                    <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 500px">
+                                        <table class="table table-striped mb-0">
+                                            <thead style="background-color: whitesmoke;">
+                                            <tr>
+                                                <th></th>
+                                                <th>Store name</th>
+                                                <th>Store Description</th>
+                                                <th>Store Rating</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="store : ${storeRecords}">
+                                                <td><input type="checkbox" th:name="'selectedStores'" th:value="${store.storeId}" /></td>
+                                                <td th:text="${store.storeName}"></td>
+                                                <td th:text="${store.storeDescription}"></td>
+                                                <td th:text="${store.storeRating}"></td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--buttons-->
+            <div class="text-center mt-5">
+                <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4">
+
+                    <!-- purchase history -->
+                    <div class="col mb-4">
+                        <a href="/PurchaseHistory" class="btn btn-outline-primary rounded-pill btn-lg btn-block text-truncate text-wrap">View purchase history</a>
+                    </div>
+
+                    <!-- get members data -->
+                    <div class="col mb-4">
+                        <button type="button" class="btn btn-outline-primary rounded-pill btn-lg btn-block text-truncate text-wrap" data-bs-toggle="modal" data-bs-target="#getMebmersDataModal">Members data</button>
+                    </div>
+
+                    <!-- remove member -->
+                    <div class="col mb-4">
+                        <button type="button" class="btn btn-outline-primary rounded-pill btn-lg btn-block text-truncate text-wrap" data-bs-toggle="modal" data-bs-target="#removeMemberModal">Remove member</button>
+                    </div>
+
+                    <!-- add system manager -->
+                    <div class="col mb-4">
+                        <button type="button" class="btn btn-outline-primary rounded-pill btn-lg btn-block text-truncate text-wrap" data-bs-toggle="modal" data-bs-target="#addSystemManagerModal">Add system manager</button>
+                    </div>
+
+                </div>
+            </div>
+            <!--buttons-->
+    </div>
+</div>
+
+<!--remove member Modal -->
+<div class="modal fade" id="removeMemberModal" tabindex="-1" aria-labelledby="removeMemberModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Remove member</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id = "removeMemberForm" action = "/removeMember" method = "post">
+                    <div class="form-outline mb-2">
+                        <input type="text" class="form-control form-control-lg" name = "username" placeholder="user name" />
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" id="removeMemberBtn" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--remove member Modal -->
+<div class="modal fade" id="addSystemManagerModal" tabindex="-1" aria-labelledby="addSystemManagerModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add system manager</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id = "addSystemManagerForm" action = "/addSystemManager" method = "post">
+                    <div class="form-outline mb-2">
+                        <input type="text" class="form-control form-control-lg" name = "username" placeholder="user name" />
+                        <input type="text" class="form-control form-control-lg mt-3" name = "password" placeholder="password" />
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" id="addSystemManagerBtn" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--get members data Modal -->
+<div class="modal fade" id="getMebmersDataModal" tabindex="-1" aria-labelledby="getMebmersDataModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Members Info</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                    <div class="form-outline mb-2">
+                        <h4 th:text="'Connected members: ' + ${membersAmount}"></h4>
+                        <h4 th:text="'Connected guests: ' + ${guestsAmount}"></h4>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p th:if = "${errorMessage}" class="text-center text-danger mt-5 mb-0" th:text="${errorMessage}"></p>
+<p th:if = "${successMessage}" class="text-center text-success mt-5 mb-0" th:text="${successMessage}"></p>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+[
+  {
+    "command": "Login",
+    "params": {
+      "username": "admin",
+      "password": "admin"
+    }
+  },
+  {
+    "command": "CreateSystemManager",
+    "params": {
+      "username": "u1",
+      "password": "u1234567"
+    }
+  },
+  {
+    "command": "Logout",
+    "params": {
+    }
+  },
+  {
+    "command": "Register",
+    "params": {
+      "username": "u2",
+      "email": "u2@gmail.com",
+      "phone": "0543654558",
+      "password": "u1234567"
+    }
+  },  
+  {
+    "command": "Register",
+    "params": {
+      "username": "u3",
+      "email": "u3@gmail.com",
+      "phone": "0543654558",
+      "password": "u1234567"
+    }
+  },
+  {
+    "command": "Register",
+    "params": {
+      "username": "u4",
+      "email": "u4@gmail.com",
+      "phone": "0543654558",
+      "password": "u1234567"
+    }
+  },  
+  {
+    "command": "Register",
+    "params": {
+      "username": "u5",
+      "email": "u5@gmail.com",
+      "phone": "0543654558",
+      "password": "u1234567"
+    }
+  },  
+  {
+    "command": "Register",
+    "params": {
+      "username": "u6",
+      "email": "u6@gmail.com",
+      "phone": "0543654558",
+      "password": "u1234567"
+    }
+  },
+  {
+    "command": "Login",
+    "params": {
+      "username": "u2",
+      "password": "u1234567"
+    }
+  },
+  {
+    "command": "OpenStore",
+    "params": {
+      "storeName": "s1",
+      "storeDescription": "Store S1"
+    }
+  },
+  {
+    "command": "AddNewProduct",
+    "params": {
+      "storeId": 1,
+      "category": "FOOD",
+      "name": "Bamba",
+      "cost": 30,
+      "quantity": 20
+    }
+  },
+  {
+    "command": "AppointManager",
+    "params": {
+      "username": "u3",
+      "storeId": 1
+    }
+  },
+  {
+    "command": "ModifyPermission",
+    "params": {
+      "username": "u3",
+      "storeId": 1,
+      "permission": 8
+    }
+  },
+  {
+    "command": "AppointOwner",
+    "params": {
+      "username": "u4",
+      "storeId": 1
+    }
+  },
+  {
+    "command": "AppointOwner",
+    "params": {
+      "username": "u5",
+      "storeId": 1
+    }
+  },
+  {
+    "command": "Logout",
+    "params": {
+    }
+  }
+]
